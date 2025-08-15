@@ -1,9 +1,18 @@
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation"; // Corrected import for the router
+import { useRouter } from "next/navigation"; // Correct import for the router
 import { useForm } from "react-hook-form";
-import { Phone, Mail, MapPin, Send } from "lucide-react"; // Using icons from lucide-react
+import { Phone, Mail, MapPin } from "lucide-react"; // Using icons from lucide-react
 import Image from "next/image"; // Import next/image for optimization
+
+// Define the ContactFormData type
+interface ContactFormData {
+  name: string;
+  phone: string;
+  email: string;
+  service: string;
+  message: string;
+}
 
 export default function Contact() {
   const router = useRouter();
@@ -11,9 +20,9 @@ export default function Contact() {
   const [showROIcon, setShowROIcon] = useState(false);
 
   // React Hook Form setup
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm<ContactFormData>();
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: ContactFormData) => {
     setLoading(true); // Set loading state to true during form submission
 
     // Redirect to WhatsApp with the form data prefilled
@@ -74,7 +83,7 @@ export default function Contact() {
                       placeholder="Your Name"
                       className="px-4 py-2 mt-1 border rounded-lg text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
-                    {typeof errors.name?.message === "string" && <span className="text-red-500 text-sm">{errors.name.message}</span>}
+                    {errors.name && <span className="text-red-500 text-sm">{errors.name.message}</span>}
                   </div>
 
                   <div className="flex flex-col">
@@ -85,7 +94,7 @@ export default function Contact() {
                       placeholder="Your Phone"
                       className="px-4 py-2 mt-1 border rounded-lg text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
-                    {typeof errors.phone?.message === "string" && <span className="text-red-500 text-sm">{errors.phone.message}</span>}
+                    {errors.phone && <span className="text-red-500 text-sm">{errors.phone.message}</span>}
                   </div>
                 </div>
 
@@ -98,9 +107,7 @@ export default function Contact() {
                     placeholder="your@email.com"
                     className="px-4 py-2 mt-1 border rounded-lg text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
-                  {typeof errors.email?.message === "string" && (
-                    <span className="text-red-500 text-sm">{errors.email.message}</span>
-                  )}
+                  {errors.email && <span className="text-red-500 text-sm">{errors.email.message}</span>}
                 </div>
 
                 <div className="flex flex-col">
@@ -116,9 +123,7 @@ export default function Contact() {
                     <option value="repair">Repair Service</option>
                     <option value="consultation">Consultation</option>
                   </select>
-                  {typeof errors.service?.message === "string" && (
-                    <span className="text-red-500 text-sm">{errors.service.message}</span>
-                  )}
+                  {errors.service && <span className="text-red-500 text-sm">{errors.service.message}</span>}
                 </div>
 
                 <div className="flex flex-col">
@@ -130,9 +135,7 @@ export default function Contact() {
                     placeholder="Tell us about your requirements..."
                     className="px-4 py-2 mt-1 border rounded-lg text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
-                  {typeof errors.message?.message === "string" && (
-                    <span className="text-red-500 text-sm">{errors.message.message}</span>
-                  )}
+                  {errors.message && <span className="text-red-500 text-sm">{errors.message.message}</span>}
                 </div>
 
                 <button

@@ -1,10 +1,17 @@
 declare global {
   interface Window {
     AOS: {
-      init: (options: Record<string, unknown>) => void;
+      init: (options: AOSOptions) => void;
       refresh: () => void;
     };
   }
+}
+
+// Type for AOS initialization options
+interface AOSOptions {
+  duration: number;
+  once: boolean;
+  easing: string;
 }
 
 // Animation configurations for common elements
@@ -44,11 +51,12 @@ export const withDelay = (
 // Initialize AOS on component mount
 export const initializeAOS = () => {
   if (typeof window !== 'undefined' && window.AOS) {
-    window.AOS.init({
+    const options: AOSOptions = {
       duration: 1000,
       once: true,
       easing: 'ease-in-out',
-    });
+    };
+    window.AOS.init(options);
   }
 };
 
