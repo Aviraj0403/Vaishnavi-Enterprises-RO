@@ -1,8 +1,9 @@
+
 export default function BestServiceSection() {
   return (
     <section
       id="best-ro-service"
-      className="py-20 bg-gradient-to-b from-blue-200 to-white bg-cover bg-center min-h-screen"
+      className="py-20 bg-gradient-to-b from-blue-200 to-white bg-cover bg-center"
       style={{ backgroundImage: 'url(/images/RO.png)' }}
     >
       <div className="container mx-auto px-6">
@@ -16,7 +17,8 @@ export default function BestServiceSection() {
           </p>
 
           {/* Content Section */}
-          {/* Add more content here if necessary */}
+ 
+
         </div>
       </div>
     </section>
