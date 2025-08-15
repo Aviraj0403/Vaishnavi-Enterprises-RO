@@ -1,5 +1,10 @@
 "use client";
+import { useRouter } from "next/navigation"; // Use correct import for Next.js app directory
+import Image from "next/image"; // Use Next.js Image component for optimization
+
 export default function Products() {
+  const router = useRouter();
+
   // Static product data (no need for `Product` import or API call)
   const products = [
     {
@@ -51,43 +56,53 @@ export default function Products() {
           <p className="text-xl text-slate-600 max-w-3xl mx-auto">Premium water purification technology for every need</p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {products.map((product) => (
-            <div
-              key={product.id}
-              className="product-card bg-white shadow-xl overflow-hidden rounded-lg hover:shadow-2xl transition-all duration-300 hover:scale-105"
-            >
-              <img
-                src={product.image}
-                alt={product.name}
-                className="w-full h-64 object-cover"
-              />
-              <div className="p-6">
-                <h3 className="text-2xl font-bold text-slate-800 mb-2">{product.name}</h3>
-                <p className="text-slate-600 mb-4">{product.description}</p>
-                <div className="mb-4">
-                  <ul className="text-sm text-slate-600 space-y-1">
-                    {product.features.slice(0, 3).map((feature, index) => (
-                      <li key={index} className="flex items-center">
-                        <span className="w-2 h-2 bg-blue-600 rounded-full mr-2 flex-shrink-0"></span>
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-2xl font-bold text-blue-600">{product.price}</span>
-                  <button
-                    onClick={() => window.location.href = `/products/${product.id}`}
-                    className="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition-colors transform hover:scale-105"
-                  >
-                    View Details
-                  </button>
+        {/* If there are no products */}
+        {products.length === 0 ? (
+          <div className="text-center text-lg text-slate-600">
+            <p>No products available at the moment. Please check back later.</p>
+          </div>
+        ) : (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {products.map((product) => (
+              <div
+                key={product.id}
+                className="product-card bg-white shadow-xl overflow-hidden rounded-lg hover:shadow-2xl transition-all duration-300 hover:scale-105"
+              >
+                <Image
+                  src={product.image}
+                  alt={product.name}
+                  width={400}
+                  height={300}
+                  className="w-full h-64 object-cover"
+                />
+                <div className="p-6">
+                  <h3 className="text-2xl font-bold text-slate-800 mb-2">{product.name}</h3>
+                  <p className="text-slate-600 mb-4">{product.description}</p>
+                  <div className="mb-4">
+                    <ul className="text-sm text-slate-600 space-y-1">
+                      {product.features.slice(0, 3).map((feature, index) => (
+                        <li key={index} className="flex items-center">
+                          <span className="w-2 h-2 bg-blue-600 rounded-full mr-2 flex-shrink-0"></span>
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-2xl font-bold text-blue-600">{product.price}</span>
+                    <button
+                      onClick={() => router.push(`/products/${product.id}`)} // Use Next.js routing
+                      className="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition-colors transform hover:scale-105"
+                      aria-label={`View details of ${product.name}`} // Added accessibility label
+                    >
+                      View Details
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

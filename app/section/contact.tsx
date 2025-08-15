@@ -1,17 +1,21 @@
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation";  // Change this line
+import { useRouter } from "next/navigation"; // Corrected import for the router
 import { useForm } from "react-hook-form";
 import { Phone, Mail, MapPin, Send } from "lucide-react"; // Using icons from lucide-react
+import Image from "next/image"; // Import next/image for optimization
 
 export default function Contact() {
   const router = useRouter();
+  const [loading, setLoading] = useState(false); // To handle form submission loading state
+  const [showROIcon, setShowROIcon] = useState(false);
 
   // React Hook Form setup
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const [showROIcon, setShowROIcon] = useState(false);
 
   const onSubmit = (data: any) => {
+    setLoading(true); // Set loading state to true during form submission
+
     // Redirect to WhatsApp with the form data prefilled
     const message = `*New Inquiry*%0AName: ${data.name}%0APhone: ${data.phone}%0AEmail: ${data.email}%0AService: ${data.service}%0AMessage: ${data.message}`;
     const whatsappLink = `https://wa.me/1234567890?text=${encodeURIComponent(message)}`;
@@ -20,8 +24,8 @@ export default function Contact() {
     // Display RO icon after submission
     setShowROIcon(true);
 
-    // Reset the form (optional)
-    // setTimeout(() => setShowROIcon(false), 5000); // Optionally hide the icon after a few seconds
+    // Optionally hide the icon after a few seconds
+    setTimeout(() => setShowROIcon(false), 5000);
   };
 
   const contactInfo = [
@@ -63,8 +67,9 @@ export default function Contact() {
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="flex flex-col">
-                    <label className="text-slate-800 font-medium">Name *</label>
+                    <label htmlFor="name" className="text-slate-800 font-medium">Name *</label>
                     <input
+                      id="name"
                       {...register("name", { required: "Name is required" })}
                       placeholder="Your Name"
                       className="px-4 py-2 mt-1 border rounded-lg text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -73,8 +78,9 @@ export default function Contact() {
                   </div>
 
                   <div className="flex flex-col">
-                    <label className="text-slate-800 font-medium">Phone *</label>
+                    <label htmlFor="phone" className="text-slate-800 font-medium">Phone *</label>
                     <input
+                      id="phone"
                       {...register("phone", { required: "Phone number is required" })}
                       placeholder="Your Phone"
                       className="px-4 py-2 mt-1 border rounded-lg text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -84,8 +90,9 @@ export default function Contact() {
                 </div>
 
                 <div className="flex flex-col">
-                  <label className="text-slate-800 font-medium">Email *</label>
+                  <label htmlFor="email" className="text-slate-800 font-medium">Email *</label>
                   <input
+                    id="email"
                     {...register("email", { required: "Email is required", pattern: { value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/, message: "Invalid email address" } })}
                     type="email"
                     placeholder="your@email.com"
@@ -97,8 +104,9 @@ export default function Contact() {
                 </div>
 
                 <div className="flex flex-col">
-                  <label className="text-slate-800 font-medium">Service Required</label>
+                  <label htmlFor="service" className="text-slate-800 font-medium">Service Required</label>
                   <select
+                    id="service"
                     {...register("service")}
                     className="px-4 py-2 mt-1 border rounded-lg text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   >
@@ -108,14 +116,15 @@ export default function Contact() {
                     <option value="repair">Repair Service</option>
                     <option value="consultation">Consultation</option>
                   </select>
-                  {typeof errors.service?.message === "string" ? (
+                  {typeof errors.service?.message === "string" && (
                     <span className="text-red-500 text-sm">{errors.service.message}</span>
-                  ) : null}
+                  )}
                 </div>
 
                 <div className="flex flex-col">
-                  <label className="text-slate-800 font-medium">Message</label>
+                  <label htmlFor="message" className="text-slate-800 font-medium">Message</label>
                   <textarea
+                    id="message"
                     {...register("message")}
                     rows={4}
                     placeholder="Tell us about your requirements..."
@@ -128,9 +137,10 @@ export default function Contact() {
 
                 <button
                   type="submit"
-                  className="w-full py-3 mt-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                  className={`w-full py-3 mt-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  disabled={loading} // Disable the button while submitting
                 >
-                  Send Message
+                  {loading ? 'Sending...' : 'Send Message'}
                 </button>
               </form>
             </div>
@@ -167,8 +177,8 @@ export default function Contact() {
 
       {/* Show RO Icon after submission */}
       {showROIcon && (
-        <div className="fixed bottom-8 right-8 bg-white p-4 rounded-full shadow-lg animate-pulse">
-          <img src="/ro-icon.svg" alt="RO Icon" className="w-16 h-16" />
+        <div className="fixed bottom-8 right-8 bg-white p-4 rounded-full shadow-lg">
+          <Image src="/ro-icon.svg" alt="RO Icon" width={64} height={64} />
         </div>
       )}
     </section>

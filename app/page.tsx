@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Hero from "./section/hero";
 import Services from "./section/services";
 import Products from "./section/products";
