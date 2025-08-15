@@ -1,5 +1,3 @@
-'use client';  // This tells Next.js that this component is a client-side component
-
 import { useEffect, useRef } from "react";
 
 interface Droplet {
@@ -16,7 +14,7 @@ interface Droplet {
 export default function WaterDroplets() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const dropletsRef = useRef<Droplet[]>([]);
-  const animationRef = useRef<number>();
+  const animationRef = useRef<number | undefined>(undefined); // Fix for the error
 
   useEffect(() => {
     const canvas = canvasRef.current;
