@@ -1,0 +1,248 @@
+@import "tailwindcss";
+
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(210, 20%, 98%);
+  --foreground: hsl(222.2, 84%, 4.9%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(222.2, 84%, 4.9%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(222.2, 84%, 4.9%);
+  --primary: hsl(221.2, 83.2%, 53.3%);
+  --primary-foreground: hsl(210, 40%, 98%);
+  --secondary: hsl(210, 40%, 96%);
+  --secondary-foreground: hsl(222.2, 84%, 4.9%);
+  --muted: hsl(210, 40%, 96%);
+  --muted-foreground: hsl(215.4, 16.3%, 46.9%);
+  --accent: hsl(210, 40%, 96%);
+  --accent-foreground: hsl(222.2, 84%, 4.9%);
+  --destructive: hsl(0, 84.2%, 60.2%);
+  --destructive-foreground: hsl(210, 40%, 98%);
+  --border: hsl(214.3, 31.8%, 91.4%);
+  --input: hsl(214.3, 31.8%, 91.4%);
+  --ring: hsl(221.2, 83.2%, 53.3%);
+  --chart-1: hsl(12, 76%, 61%);
+  --chart-2: hsl(173, 58%, 39%);
+  --chart-3: hsl(197, 37%, 24%);
+  --chart-4: hsl(43, 74%, 66%);
+  --chart-5: hsl(27, 87%, 67%);
+  --radius: 0.5rem;
+  --font-sans: 'Inter', sans-serif;
+  --font-serif: Georgia, serif;
+  --font-mono: Menlo, monospace;
+}
+
+.dark {
+  --background: hsl(222.2, 84%, 4.9%);
+  --foreground: hsl(210, 40%, 98%);
+  --card: hsl(222.2, 84%, 4.9%);
+  --card-foreground: hsl(210, 40%, 98%);
+  --popover: hsl(222.2, 84%, 4.9%);
+  --popover-foreground: hsl(210, 40%, 98%);
+  --primary: hsl(217.2, 91.2%, 59.8%);
+  --primary-foreground: hsl(222.2, 84%, 4.9%);
+  --secondary: hsl(217.2, 32.6%, 17.5%);
+  --secondary-foreground: hsl(210, 40%, 98%);
+  --muted: hsl(217.2, 32.6%, 17.5%);
+  --muted-foreground: hsl(215, 20.2%, 65.1%);
+  --accent: hsl(217.2, 32.6%, 17.5%);
+  --accent-foreground: hsl(210, 40%, 98%);
+  --destructive: hsl(0, 62.8%, 30.6%);
+  --destructive-foreground: hsl(210, 40%, 98%);
+  --border: hsl(217.2, 32.6%, 17.5%);
+  --input: hsl(217.2, 32.6%, 17.5%);
+  --ring: hsl(224.3, 76.3%, 94.1%);
+  --chart-1: hsl(220, 70%, 50%);
+  --chart-2: hsl(160, 60%, 45%);
+  --chart-3: hsl(30, 80%, 55%);
+  --chart-4: hsl(280, 65%, 60%);
+  --chart-5: hsl(340, 75%, 55%);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+@layer utilities {
+  .water-gradient {
+    background: linear-gradient(135deg, #2563EB 0%, #3B82F6 50%, #60A5FA 100%);
+  }
+  
+  .glass-morphism {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  
+  .droplet {
+    border-radius: 50% 50% 50% 70%;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(147, 197, 253, 0.6));
+  }
+  
+  .advanced-droplet {
+    position: absolute;
+    border-radius: 50% 50% 50% 70%;
+    background: radial-gradient(circle at 30% 30%, 
+      rgba(255, 255, 255, 0.9) 0%, 
+      rgba(96, 165, 250, 0.7) 30%, 
+      rgba(59, 130, 246, 0.5) 70%, 
+      rgba(37, 99, 235, 0.2) 100%);
+    box-shadow: 
+      inset 2px -2px 4px rgba(255, 255, 255, 0.3),
+      inset -2px 2px 4px rgba(37, 99, 235, 0.2),
+      0 4px 8px rgba(59, 130, 246, 0.2);
+    animation: advanced-float 4s ease-in-out infinite;
+  }
+  
+  .advanced-droplet-1 {
+    width: 12px;
+    height: 14px;
+    top: 10%;
+    left: 15%;
+    animation-delay: 0s;
+    animation-duration: 4.5s;
+  }
+  
+  .advanced-droplet-2 {
+    width: 8px;
+    height: 10px;
+    top: 20%;
+    right: 20%;
+    animation-delay: 1s;
+    animation-duration: 3.8s;
+  }
+  
+  .advanced-droplet-3 {
+    width: 15px;
+    height: 18px;
+    top: 45%;
+    left: 8%;
+    animation-delay: 2s;
+    animation-duration: 5.2s;
+  }
+  
+  .advanced-droplet-4 {
+    width: 10px;
+    height: 12px;
+    top: 35%;
+    right: 10%;
+    animation-delay: 0.5s;
+    animation-duration: 4.1s;
+  }
+  
+  .advanced-droplet-5 {
+    width: 6px;
+    height: 8px;
+    bottom: 30%;
+    left: 25%;
+    animation-delay: 1.5s;
+    animation-duration: 3.5s;
+  }
+  
+  .advanced-droplet-6 {
+    width: 11px;
+    height: 13px;
+    bottom: 40%;
+    right: 15%;
+    animation-delay: 2.5s;
+    animation-duration: 4.8s;
+  }
+  
+  .advanced-droplet-7 {
+    width: 7px;
+    height: 9px;
+    top: 60%;
+    left: 40%;
+    animation-delay: 3s;
+    animation-duration: 3.2s;
+  }
+  
+  .advanced-droplet-8 {
+    width: 13px;
+    height: 16px;
+    bottom: 20%;
+    right: 35%;
+    animation-delay: 1.8s;
+    animation-duration: 4.3s;
+  }
+  
+  .ro-particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: radial-gradient(circle, 
+      rgba(255, 255, 255, 1) 0%, 
+      rgba(96, 165, 250, 0.8) 100%);
+    border-radius: 50%;
+    box-shadow: 0 0 6px rgba(96, 165, 250, 0.6);
+    animation: particle-flow 6s linear infinite;
+  }
+  
+  .ro-particle-1 {
+    top: 25%;
+    left: 5%;
+    animation-delay: 0s;
+  }
+  
+  .ro-particle-2 {
+    top: 55%;
+    right: 8%;
+    animation-delay: 2s;
+  }
+  
+  .ro-particle-3 {
+    bottom: 35%;
+    left: 12%;
+    animation-delay: 4s;
+  }
+  
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+  
+  .animate-fade-in {
+    animation: fadeIn 1s ease-out forwards;
+  }
+  
+  .animation-delay-200 {
+    animation-delay: 0.2s;
+  }
+  
+  .animation-delay-400 {
+    animation-delay: 0.4s;
+  }
+  
+  .service-card {
+    transition: all 0.3s ease;
+    transform-style: preserve-3d;
+  }
+  
+  .service-card:hover {
+    transform: translateY(-8px) rotateX(5deg);
+  }
+  
+  .product-card {
+    transition: all 0.3s ease;
+    transform-style: preserve-3d;
+  }
+  
+  .product-card:hover {
+    transform: translateY(-5px) scale(1.02);
+  }
+}
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
